@@ -2,6 +2,7 @@ import React from 'react';
 import './Hotdogs.css';
 import HotdogsData from './HotdogsData.js';
 import AddHotdogForm from './addHotdog/AddHotdog.js';
+import EditHotdog from './EditHotdog/EditHotdog.js';
 
 
 class Hotdog extends React.Component {
@@ -20,7 +21,9 @@ function HotdogsList(props) {
     return (
       <div className="hotdog-list-block">
         <h1>Hot dogs list</h1>
-        {props.hotdogs.map(item => <Hotdog data={item}/>)}
+        {props.hotdogs.map(item => item.isEditing ?
+            <EditHotdog key={item.id} saveHotdog={props.saveHotdog} data={item}/> :
+            <Hotdog key={item.id} data={item}/>)}
       </div>
     )
   }
@@ -32,6 +35,16 @@ function HotdogsList(props) {
         hotdogs: HotdogsData,
       }
       this.addHotdog = this.addHotdog.bind(this);
+      this.saveHotdog = this.saveHotdog.bind(this);
+    }
+
+    saveHotdog(hotdog) {
+      const { id } = hotdog;
+      const hotdogs = this.state.hotdogs.filter(h => h.id !== id);
+      hotdogs.push(Object.assign({}, hotdog, { isEditing: false }))
+      this.setState({
+        hotdogs: hotdogs,
+      })
     }
 
     addHotdog(hotdog) {
@@ -44,7 +57,7 @@ function HotdogsList(props) {
       return (
         <React.Fragment>
           <AddHotdogForm addHotdog={this.addHotdog} />
-          <HotdogsList hotdogs={this.state.hotdogs} />
+          <HotdogsList saveHotdog={this.saveHotdog} hotdogs={this.state.hotdogs}/>
         </React.Fragment>
       )
     }
