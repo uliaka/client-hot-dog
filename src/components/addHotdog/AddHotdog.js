@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Hotdogs.css';
 
 class AddHotdogForm extends React.Component {
   constructor(props) {
@@ -13,8 +14,6 @@ class AddHotdogForm extends React.Component {
   }
 
   handleChange(prop, value) {
-    console.log('prop', prop )
-    console.log('value', value)
     const state = this.state;
     state[prop] = value;
     this.setState(state);
@@ -44,7 +43,7 @@ class AddHotdogForm extends React.Component {
   render() {
     return (
           <div className="form-create-hotdogs">
-            <h2>Add hotdog</h2>
+            <h2>Add Hot Dog</h2>
             <label>
               Title
               <input type="text"

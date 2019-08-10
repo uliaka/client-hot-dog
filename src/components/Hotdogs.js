@@ -8,12 +8,10 @@ import EditHotdog from './EditHotdog/EditHotdog.js';
 class Hotdog extends React.Component {
 
   onButtonClick() {
-    console.log('on button click')
     this.props.startEditing(this.props.data.id)
   }
 
   onButtonRemove() {
-    console.log('on button click')
     this.props.removeHotdog(this.props.data.id)
   }
 
@@ -37,7 +35,7 @@ class Hotdog extends React.Component {
 function HotdogsList(props) {
     return (
       <div className="hotdog-list-block">
-        <h1>Hot dogs list</h1>
+        <h1>Hot Dogs list</h1>
         {props.hotdogs.map(item => item.isEditing ?
             <EditHotdog key={item.id} saveHotdog={props.saveHotdog} data={item}/> :
             <Hotdog startEditing={props.startEditing} removeHotdog={props.removeHotdog} key={item.id} data={item}/>)}
@@ -49,12 +47,27 @@ function HotdogsList(props) {
     constructor(props) {
       super(props);
       this.state = {
-        hotdogs: HotdogsData,
+        hotdogs: [],
       }
       this.addHotdog = this.addHotdog.bind(this);
       this.saveHotdog = this.saveHotdog.bind(this);
       this.startEditing = this.startEditing.bind(this);
       this.removeHotdog = this.removeHotdog.bind(this);
+    }
+
+    componentDidMount() {
+      fetch('http://localhost:8080/hotdogs', {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+      })
+        .then(res => {
+          return res.json()
+        })
+        .then(res => {
+          this.setState({ hotdogs: res.data });
+        })
+        .catch(err => { console.log(err) })
     }
 
     saveHotdog(hotdog) {
@@ -68,8 +81,22 @@ function HotdogsList(props) {
 
     addHotdog(hotdog) {
       const { hotdogs } = this.state;
-      hotdogs.push(hotdog);
-      this.setState({ hotdogs });
+      fetch('http://localhost:8080/hotdogs', {
+        method: 'POST',
+        body: JSON.stringify(hotdog),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+        }).then(res => {
+          return res.json();
+        }).then(res => {
+          if (res.err) {
+            alert(res.err)
+            return;
+          }
+          hotdogs.push(hotdog);
+          this.setState({ hotdogs });
+        }).catch(err => { alert('error:', err.message) })
     }
 
     startEditing(id) {

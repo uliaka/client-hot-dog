@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Hotdogs.css';
 
 class EditHotdog extends React.Component {
   state = {};
