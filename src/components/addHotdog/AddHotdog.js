@@ -69,7 +69,7 @@ class AddHotdogForm extends React.Component {
               />
             </label>
             <button onClick={() => {this.addHotdog()}}>
-              Add hotdog
+              Add Hot Dog
             </button>
           </div>
     );

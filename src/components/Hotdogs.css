@@ -4,7 +4,7 @@ body {
   margin: 0;
   background-color: #211D1D;
   color: #FEFEFE;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .hotdog-list-block {
@@ -14,12 +14,29 @@ body {
 }
 
 .hotdog-block {
-  border: 1px solid black;
+  border: 2px solid #FEFEFE;
+  border-radius: 7px;
   text-align: left;
   margin: 30px;
+  padding: 10px;
 }
 
 .form-create-hotdogs {
   text-align: center;
+}
 
+.form-create-hotdogs label, input {
+  margin-left: 10px;
+}
+
+ button {
+   margin-left: 20px;
+   padding: 10px 20px;
+   cursor: pointer;
+   border: 1px solid #D51086;
+   border-radius: 4px;
+   font: bold 15px arial;
+   text-decoration: none;
+   color: #ffffff;
+   background-color: #D51086;
 }
