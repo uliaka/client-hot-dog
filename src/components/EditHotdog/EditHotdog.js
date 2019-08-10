@@ -5,14 +5,14 @@ class EditHotdog extends React.Component {
   state = {};
 
   static getDerivedStateFromProps(props, state) {
-    const { description, price, title, id } = props.data;
+    const { description, price, title, _id } = props.data;
     const noState = !state.price && !state.title && !state.price;
     if (noState) {
       return {
         description,
         price,
         title,
-        id
+        _id
       };
     }
     return null;

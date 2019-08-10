@@ -8,25 +8,29 @@ import EditHotdog from './EditHotdog/EditHotdog.js';
 class Hotdog extends React.Component {
 
   onButtonClick() {
-    this.props.startEditing(this.props.data.id)
+    this.props.startEditing(this.props.data._id)
   }
 
   onButtonRemove() {
-    this.props.removeHotdog(this.props.data.id)
+    this.props.removeHotdog(this.props.data._id)
   }
 
   render() {
     return (
       <div className="hotdog-block">
-        <h2>{this.props.data.title}</h2>
-        <div className="description"> {this.props.data.description}</div>
-        <div className="price">{this.props.data.price} $ </div>
-        <button onClick={() => this.onButtonClick()}>
-          edit
-        </button>
-        <button onClick={() => this.onButtonRemove()}>
-          remove
-        </button>
+      <div className="info-container">
+          <h2>{this.props.data.title}</h2>
+          <div className="description"> {this.props.data.description}</div>
+          <div className="price">{this.props.data.price} $ </div>
+        </div>
+        <div className="button-container">
+          <button onClick={() => this.onButtonClick()}>
+            edit
+          </button>
+          <button onClick={() => this.onButtonRemove()}>
+            remove
+          </button>
+        </div>
       </div>
     )
   }
@@ -37,8 +41,8 @@ function HotdogsList(props) {
       <div className="hotdog-list-block">
         <h1>Hot Dogs list</h1>
         {props.hotdogs.map(item => item.isEditing ?
-            <EditHotdog key={item.id} saveHotdog={props.saveHotdog} data={item}/> :
-            <Hotdog startEditing={props.startEditing} removeHotdog={props.removeHotdog} key={item.id} data={item}/>)}
+            <EditHotdog key={item._id} saveHotdog={props.saveHotdog} data={item}/> :
+            <Hotdog startEditing={props.startEditing} removeHotdog={props.removeHotdog} key={item._id} data={item}/>)}
       </div>
     )
   }
@@ -71,8 +75,8 @@ function HotdogsList(props) {
     }
 
     saveHotdog(hotdog) {
-      const { id } = hotdog;
-      const hotdogs = this.state.hotdogs.filter(h => h.id !== id);
+      const { _id } = hotdog;
+      const hotdogs = this.state.hotdogs.filter(h => h._id !== _id);
       hotdogs.push(Object.assign({}, hotdog, { isEditing: false }))
       this.setState({
         hotdogs: hotdogs,
@@ -99,10 +103,10 @@ function HotdogsList(props) {
         }).catch(err => { alert('error:', err.message) })
     }
 
-    startEditing(id) {
+    startEditing(_id) {
       const { hotdogs } = this.state;
       const updated = hotdogs.map(item => {
-        if (item.id == id) {
+        if (item._id == _id) {
           return Object.assign({}, item, { isEditing: true })
         } else {
           return Object.assign({}, item, { isEditing: false })
@@ -114,8 +118,8 @@ function HotdogsList(props) {
       });
     }
 
-    removeHotdog(id) {
-      const hotdogs = this.state.hotdogs.filter(h => h.id !== id);
+    removeHotdog(_id) {
+      const hotdogs = this.state.hotdogs.filter(h => h._id !== _id);
       this.setState({ hotdogs });
     }
 
