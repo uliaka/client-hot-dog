@@ -38,7 +38,7 @@ class EditHotdog extends React.Component {
     return (
       <div className="hotdog-block">
         <label>
-          title
+          Title
           <input type="text"
             name="title"
             value={title}
@@ -46,19 +46,19 @@ class EditHotdog extends React.Component {
           />
         </label>
         <label>
-          price
-          <input type="text"
-            name="price"
-            value={price}
-            onChange={(e) => {this.handleChange('price', e.target.value)}}
-          />
-        </label>
-        <label>
-         description
+         Description
           <input type="text"
             name="description"
             value={description}
             onChange={(e) => {this.handleChange('description', e.target.value)}}
+          />
+        </label>
+        <label>
+          Price
+          <input type="number"
+            name="price"
+            value={price}
+            onChange={(e) => {this.handleChange('price', e.target.value)}}
           />
         </label>
         <button onClick={() => this.saveFormData()}>save</button>

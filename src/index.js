@@ -9,7 +9,10 @@ const routing = (
   <Router>
     <header>
         <span className="nav-link">
-          <Link to="/hotdogs">Hot dogs list</Link>
+          <Link to="/hotdogs">Hot Dogs</Link>
+        </span>
+        <span className="nav-link">
+          <Link to="/">Home</Link>
         </span>
       </header>
       <div>
