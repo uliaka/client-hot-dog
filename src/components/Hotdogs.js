@@ -6,12 +6,21 @@ import EditHotdog from './EditHotdog/EditHotdog.js';
 
 
 class Hotdog extends React.Component {
+
+  onButtonClick() {
+    console.log('on button click')
+    this.props.startEditing(this.props.data.id)
+  }
+
   render() {
     return (
       <div className="hotdog-block">
         <h2>{this.props.data.title}</h2>
         <div className="description"> {this.props.data.description}</div>
         <div className="price">{this.props.data.price} $ </div>
+        <button onClick={() => this.onButtonClick()}>
+          edit
+        </button>
       </div>
     )
   }
@@ -23,7 +32,7 @@ function HotdogsList(props) {
         <h1>Hot dogs list</h1>
         {props.hotdogs.map(item => item.isEditing ?
             <EditHotdog key={item.id} saveHotdog={props.saveHotdog} data={item}/> :
-            <Hotdog key={item.id} data={item}/>)}
+            <Hotdog startEditing={props.startEditing} key={item.id} data={item}/>)}
       </div>
     )
   }
@@ -36,6 +45,7 @@ function HotdogsList(props) {
       }
       this.addHotdog = this.addHotdog.bind(this);
       this.saveHotdog = this.saveHotdog.bind(this);
+      this.startEditing = this.startEditing.bind(this);
     }
 
     saveHotdog(hotdog) {
@@ -53,11 +63,19 @@ function HotdogsList(props) {
       this.setState({ hotdogs });
     }
 
+    startEditing(id) {
+      console.log('!!!!!!!!!!!')
+    }
+
     render() {
       return (
         <React.Fragment>
           <AddHotdogForm addHotdog={this.addHotdog} />
-          <HotdogsList saveHotdog={this.saveHotdog} hotdogs={this.state.hotdogs}/>
+          <HotdogsList
+            saveHotdog={this.saveHotdog}
+            hotdogs={this.state.hotdogs}
+            startEditing={this.startEditing}
+            />
         </React.Fragment>
       )
     }
