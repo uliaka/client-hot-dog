@@ -1,6 +1,7 @@
 import React from 'react';
 import './Hotdogs.css';
-import HotdogsData from './HotdogsData.js'
+import HotdogsData from './HotdogsData.js';
+import AddHotdogForm from './addHotdog/AddHotdog.js';
 
 
 class Hotdog extends React.Component {
@@ -8,8 +9,8 @@ class Hotdog extends React.Component {
     return (
       <div className="hotdog-block">
         <h2>{this.props.data.title}</h2>
-        <span className="description"> {this.props.data.description}</span>
-        <span className="price">{this.props.data.price} $ </span>
+        <div className="description"> {this.props.data.description}</div>
+        <div className="price">{this.props.data.price} $ </div>
       </div>
     )
   }
@@ -30,11 +31,21 @@ function HotdogsList(props) {
       this.state = {
         hotdogs: HotdogsData,
       }
+      this.addHotdog = this.addHotdog.bind(this);
+    }
+
+    addHotdog(hotdog) {
+      const { hotdogs } = this.state;
+      hotdogs.push(hotdog);
+      this.setState({ hotdogs });
     }
 
     render() {
       return (
-        <HotdogsList hotdogs={ HotdogsData }/>
+        <React.Fragment>
+          <AddHotdogForm addHotdog={this.addHotdog} />
+          <HotdogsList hotdogs={this.state.hotdogs} />
+        </React.Fragment>
       )
     }
   }
