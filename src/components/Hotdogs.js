@@ -4,6 +4,7 @@ import HotdogsData from './HotdogsData.js';
 import AddHotdogForm from './addHotdog/AddHotdog.js';
 import EditHotdog from './EditHotdog/EditHotdog.js';
 
+const SERVER_URL = 'https://crud-hot-dog735.herokuapp.com';
 
 class Hotdog extends React.Component {
 
@@ -60,7 +61,7 @@ function HotdogsList(props) {
     }
 
     componentDidMount() {
-      fetch('http://localhost:8080/hotdogs', {
+      fetch(`${SERVER_URL}/hotdogs`, {
         headers: {
             'Content-Type': 'application/json',
         }
@@ -85,7 +86,7 @@ function HotdogsList(props) {
 
     addHotdog(hotdog) {
       const { hotdogs } = this.state;
-      fetch('http://localhost:8080/hotdogs', {
+      fetch(`${SERVER_URL}/hotdogs`, {
         method: 'POST',
         body: JSON.stringify(hotdog),
         headers: {
